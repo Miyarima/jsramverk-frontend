@@ -1,6 +1,16 @@
 <%- include('includes/header'); %>
-<h2>Dokument</h2>
-<a class="button" href="/create">Create Document</a>
-<% docs.forEach(function(doc){ %>
-<h3><a href="/<%= doc.id %>"><%= doc.title %></a></h3>
-<% }); %> <%- include('includes/footer'); %>
+<div class="title-bar">
+  <h2>Dokument</h2>
+  <a class="button" href="/create">Create Document</a>
+</div>
+<div class="docs-container">
+  <% docs.reverse().forEach(function(doc){ %>
+  <a class="doc-link" href="/<%= doc.id %>">
+    <div>
+      <div class="doc"></div>
+      <h3><%= doc.title %></h3>
+    </div>
+  </a>
+  <% }); %>
+</div>
+<%- include('includes/footer'); %>
