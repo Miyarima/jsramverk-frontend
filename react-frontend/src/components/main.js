@@ -1,3 +1,5 @@
+import AllDocuments from "./documents";
+
 function Main(props) {
   return (
     <div class="main">
@@ -8,12 +10,7 @@ function Main(props) {
         </a>
       </div>
       <div class="docs-container">
-        <a class="doc-link" href="/<%= doc.id %>">
-          <div>
-            <div class="doc"></div>
-            <h3>Title</h3>
-          </div>
-        </a>
+        <AllDocuments />
       </div>
     </div>
   );
