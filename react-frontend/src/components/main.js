@@ -1,6 +1,7 @@
 import AllDocuments from "./documents";
+// import { Routes, Route } from "react-router-dom";
 
-function Main(props) {
+function Main() {
   return (
     <div class="main">
       <div class="title-bar">
@@ -9,9 +10,7 @@ function Main(props) {
           Create Document
         </a>
       </div>
-      <div class="docs-container">
-        <AllDocuments />
-      </div>
+      <AllDocuments />
     </div>
   );
 }
