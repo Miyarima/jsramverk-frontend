@@ -6,7 +6,7 @@ function Main() {
     <div class="main">
       <div class="title-bar">
         <h2>Dokument</h2>
-        <a class="button" href="/create">
+        <a class="button" href="/document/create">
           Create Document
         </a>
       </div>
