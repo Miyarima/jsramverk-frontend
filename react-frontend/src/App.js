@@ -15,9 +15,12 @@ function App() {
       <div class="body">
         <Header />
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/document/create" element={<CreateDocument />} />
-          <Route path="/document/:id" element={<Document />} />
+          <Route path="~jogo19/editor/" element={<Main />} />
+          <Route
+            path="~jogo19/editor/document/create"
+            element={<CreateDocument />}
+          />
+          <Route path="~jogo19/editor/document/:id" element={<Document />} />
         </Routes>
         <Footer authors={authors} />
       </div>

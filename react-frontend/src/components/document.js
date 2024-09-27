@@ -67,7 +67,7 @@ function Document() {
 
       //   const result = await response.json();
       //   console.log("Success:", result);
-      navigate("/");
+      navigate("/~jogo19/editor/");
     } catch (error) {
       console.error("Error:", error);
     }

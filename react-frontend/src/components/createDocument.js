@@ -38,7 +38,7 @@ function CreateDocument() {
         throw new Error("Network response was not ok");
       }
 
-      navigate("/");
+      navigate("/~jogo19/editor/");
     } catch (error) {
       console.error("Error:", error);
     }

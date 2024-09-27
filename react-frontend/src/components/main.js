@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AllDocuments from "./documents";
 // import { Routes, Route } from "react-router-dom";
 
@@ -6,9 +7,9 @@ function Main() {
     <div class="main">
       <div class="title-bar">
         <h2>Dokument</h2>
-        <a class="button" href="/document/create">
+        <Link class="button" to="document/create">
           Create Document
-        </a>
+        </Link>
       </div>
       <AllDocuments />
     </div>
