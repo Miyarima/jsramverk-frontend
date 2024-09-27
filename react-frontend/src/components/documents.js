@@ -31,7 +31,7 @@ function AllDocuments() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div class="docs-container">
+    <div className="docs-container">
       {data.data.map((item) => (
         <Link className="doc-link" to={`document/${item._id}`} key={item._id}>
           <div>
