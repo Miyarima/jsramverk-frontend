@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 
 function AllDocuments() {
@@ -32,12 +33,12 @@ function AllDocuments() {
   return (
     <div class="docs-container">
       {data.data.map((item) => (
-        <a className="doc-link" href={`/document/${item._id}`} key={item._id}>
+        <Link className="doc-link" to={`document/${item._id}`} key={item._id}>
           <div>
             <div className="doc"></div>
             <h3>{item.title}</h3>
           </div>
-        </a>
+        </Link>
       ))}
     </div>
   );
