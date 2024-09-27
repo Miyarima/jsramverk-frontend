@@ -4,6 +4,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import Main from "./components/main";
 import Document from "./components/document";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CreateDocument from "./components/createDocument";
 
@@ -12,7 +13,7 @@ const authors = "Jonathan & Zein";
 function App() {
   return (
     <Router>
-      <div class="body">
+      <div className="body">
         <Header />
         <Routes>
           <Route path="~jogo19/editor/" element={<Main />} />
