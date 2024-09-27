@@ -4,8 +4,6 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
@@ -17,7 +15,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "deploy": "npm run build && rsync -av --delete build/ jogo19@ssh.student.bth.se:www/editor"
   },
@@ -26,6 +24,9 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "browserslist": {
     "production": [
@@ -40,7 +41,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-react": "^7.24.7",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
     "eslint": "^9.11.1",
-    "eslint-plugin-react": "^7.37.0"
+    "eslint-plugin-react": "^7.37.0",
+    "jest": "^27.5.1"
   }
 }

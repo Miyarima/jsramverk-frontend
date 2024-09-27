@@ -50,6 +50,7 @@ function CreateDocument() {
         <label htmlFor="title">Title</label>
         <input
           type="text"
+          id="title"
           name="title"
           value={formData.title}
           onChange={handleChange}
@@ -57,6 +58,7 @@ function CreateDocument() {
 
         <label htmlFor="content">Innehåll</label>
         <textarea
+          id="content"
           name="content"
           value={formData.content}
           onChange={handleChange}
