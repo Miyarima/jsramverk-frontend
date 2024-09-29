@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 
 function Document() {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -30,7 +29,7 @@ function Document() {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error);
+        console.error("Error:", error);
         setLoading(false);
       });
   }, [id]);
@@ -62,19 +61,22 @@ function Document() {
       );
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Form submission failed");
       }
 
-      //   const result = await response.json();
-      //   console.log("Success:", result);
       navigate("/~jogo19/editor/");
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) {
+    return (
+      <div className="loading">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="main">

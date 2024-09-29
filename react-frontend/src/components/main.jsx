@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import AllDocuments from "./documents";
-// import { Routes, Route } from "react-router-dom";
 
 function Main() {
   return (

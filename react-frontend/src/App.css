@@ -116,3 +116,10 @@ footer {
   text-decoration: none;
   color: #fff;
 }
+
+.loading {
+  width: 96%;
+  max-width: 64rem;
+  margin: 1.4rem auto;
+  flex: 1 0 auto;
+}
