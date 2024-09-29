@@ -35,7 +35,7 @@ function CreateDocument() {
       );
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Form submission failed");
       }
 
       navigate("/~jogo19/editor/");
