@@ -8,19 +8,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CreateDocument from "./components/createDocument";
 
 const authors = "Jonathan & Zein";
+const basename = process.env.NODE_ENV === "production" ? "~jogo19/editor" : "/";
 
 function App() {
   return (
-    <Router>
+    <Router basename={basename}>
       <div className="body">
         <Header />
         <Routes>
-          <Route path="~jogo19/editor/" element={<Main />} />
-          <Route
-            path="~jogo19/editor/document/create"
-            element={<CreateDocument />}
-          />
-          <Route path="~jogo19/editor/document/:id" element={<Document />} />
+          <Route path="/" element={<Main />} />
+          <Route path="/document/create" element={<CreateDocument />} />
+          <Route path="/document/:id" element={<Document />} />
         </Routes>
         <Footer authors={authors} />
       </div>
