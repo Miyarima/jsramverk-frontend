@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-function Header(props) {
+function Header() {
   return (
     <header>
-      <Link className="logo-link" to={props.currentPath}>
+      <Link className="logo-link" to="/">
         <h1>SSR Editor</h1>
       </Link>
     </header>

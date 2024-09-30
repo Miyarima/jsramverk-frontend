@@ -14,7 +14,7 @@ function App() {
   return (
     <Router basename={basename}>
       <div className="body">
-        <Header currentPath={basename} />
+        <Header />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/document/create" element={<CreateDocument />} />
