@@ -38,7 +38,7 @@ function CreateDocument() {
         throw new Error("Form submission failed");
       }
 
-      navigate("/~jogo19/editor/");
+      navigate("/");
     } catch (error) {
       console.error("Error:", error);
     }
