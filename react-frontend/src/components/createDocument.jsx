@@ -45,13 +45,14 @@ function CreateDocument() {
   };
 
   return (
-    <div className="main">
+    <div className="document-bg">
       <form onSubmit={handleSubmit} className="new-doc">
         <label htmlFor="title">Title</label>
         <input
           type="text"
           id="title"
           name="title"
+          className="title-input"
           value={formData.title}
           onChange={handleChange}
         />
@@ -60,11 +61,12 @@ function CreateDocument() {
         <textarea
           id="content"
           name="content"
+          className="content-input"
           value={formData.content}
           onChange={handleChange}
         />
 
-        <input type="submit" value="Skapa" />
+        <input className="button-create" type="submit" value="Skapa" />
       </form>
     </div>
   );

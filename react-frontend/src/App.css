@@ -44,7 +44,7 @@ p {
 }
 
 header {
-  background-color: #0074d9;
+  background: linear-gradient(to right, red, yellow);
   color: #fff;
   padding: 1.4rem 3rem;
 }
@@ -53,6 +53,13 @@ header {
   width: 96%;
   max-width: 64rem;
   margin: 1.4rem auto;
+  flex: 1 0 auto;
+}
+
+.document-bg {
+  width: 96%;
+  max-width: 64rem;
+  margin: 0 auto;
   flex: 1 0 auto;
 }
 
@@ -66,6 +73,29 @@ textarea {
   margin-bottom: 1.4rem;
   font-size: 1rem;
   padding: 1.4rem;
+  max-width: 64rem;
+  min-width: 64rem;
+  border: none;
+  outline: none;
+}
+
+label {
+  padding: 0.5em 0;
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+.title-input {
+  border: 1px solid #333;
+  border-radius: 0.5em;
+  padding: 1rem 1.4rem;
+}
+
+.content-input {
+  border: 1px solid #333;
+  border-radius: 0.5em;
+  padding: 1rem 1.4rem;
+  min-height: 50vh;
 }
 
 footer {
@@ -77,11 +107,30 @@ footer {
 
 .button {
   padding: 0.5em 1em;
-  background-color: #0074d9;
+  background-color: #ff2b00;
   color: #fff;
   border-radius: 10px;
   text-decoration: none;
   height: fit-content;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #ffa800;
+}
+
+.button-create {
+  padding: 0.5em 1em;
+  background-color: #ff2b00;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  height: fit-content;
+}
+
+.button-create:hover {
+  cursor: pointer;
+  background-color: #ffa800;
 }
 
 .title-bar {
@@ -104,7 +153,7 @@ footer {
 }
 
 .doc:hover {
-  border: 2px solid #0074d9;
+  border: 2px solid #ff2b00;
 }
 
 .doc-link {

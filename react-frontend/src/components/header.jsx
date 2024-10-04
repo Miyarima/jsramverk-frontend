@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 function Header() {
   return (
@@ -11,9 +10,5 @@ function Header() {
     </header>
   );
 }
-
-Header.propTypes = {
-  currentPath: PropTypes.string.isRequired,
-};
 
 export default Header;
