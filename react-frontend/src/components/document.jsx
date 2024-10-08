@@ -11,25 +11,36 @@ function Document() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  // const currentPath =
-  //   process.env.NODE_ENV === "production"
-  //     ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
-  //     : "http://localhost:1337";
   const currentPath =
-    "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net";
+    process.env.NODE_ENV === "production"
+      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
+      : "http://localhost:1337";
+  // const currentPath =
+  //   "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net";
+  // const currentPath = "http://localhost:1337";
+
   const socketRef = useRef(null);
+
+  const handelSocketUpdate = (update, data) => {
+    const path = update === "socketJoin" ? data.content : data;
+
+    setFormData({
+      title: path.title,
+      content: path.content,
+    });
+  };
 
   useEffect(() => {
     socketRef.current = io(currentPath);
     socketRef.current.emit("create", id);
 
-    socketRef.current.on("serverUpdate", (data) => {
-      console.log("serverUpdate:", data);
-      setFormData({
-        title: data.title,
-        content: data.content,
-      });
-    });
+    socketRef.current.on("serverUpdate", (data) =>
+      handelSocketUpdate("serverUpdate", data)
+    );
+
+    socketRef.current.on("socketJoin", (data) =>
+      handelSocketUpdate("socketJoin", data)
+    );
 
     fetch(`${currentPath}/docs/${id}`)
       .then((response) => {

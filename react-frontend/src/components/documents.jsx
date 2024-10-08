@@ -5,10 +5,16 @@ function AllDocuments() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const currentPath =
+    process.env.NODE_ENV === "production"
+      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
+      : "http://localhost:1337";
+  // const currentPath =
+  //   "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net";
+  // const currentPath = "http://localhost:1337";
+
   useEffect(() => {
-    fetch(
-      "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net/docs"
-    )
+    fetch(`${currentPath}/docs`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("An Error has occured");

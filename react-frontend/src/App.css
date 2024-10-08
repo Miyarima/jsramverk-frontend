@@ -126,6 +126,7 @@ footer {
   border-radius: 10px;
   text-decoration: none;
   height: fit-content;
+  font-size: 1.2em;
 }
 
 .button-create:hover {
