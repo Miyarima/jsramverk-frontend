@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import AddComment from "./comment";
 
 function Document() {
   const [loading, setLoading] = useState(true);
@@ -8,6 +9,8 @@ function Document() {
     title: "",
     content: "",
   });
+  const [caretPosition, setCaretPosition] = useState({ caret: 0, line: 0 });
+  const [comments, setComments] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,6 +33,21 @@ function Document() {
     });
   };
 
+  const handelSocketComment = (data) => {
+    if (data.comment) {
+      setComments((prevComments) => [
+        ...prevComments,
+        {
+          comment: data.comment,
+          caret: data.caretPosition.caret,
+          row: data.caretPosition.line,
+        },
+      ]);
+    } else {
+      setComments((prevComments) => [...prevComments, ...data]);
+    }
+  };
+
   useEffect(() => {
     socketRef.current = io(currentPath);
     socketRef.current.emit("create", id);
@@ -41,6 +59,10 @@ function Document() {
     socketRef.current.on("socketJoin", (data) =>
       handelSocketUpdate("socketJoin", data)
     );
+
+    socketRef.current.on("newComment", (data) => {
+      handelSocketComment(data);
+    });
 
     fetch(`${currentPath}/docs/${id}`)
       .then((response) => {
@@ -104,6 +126,19 @@ function Document() {
     }
   };
 
+  const handleCarotMove = (e) => {
+    const value = e.target.value;
+    const caretPosition = e.target.selectionStart;
+    const lineNumber = value.substring(0, caretPosition).split("\n").length;
+
+    const caretPositionInLine =
+      lineNumber === 1
+        ? caretPosition
+        : caretPosition - (value.lastIndexOf("\n", caretPosition - 1) + 1);
+
+    setCaretPosition({ caret: caretPositionInLine, line: lineNumber });
+  };
+
   if (loading) {
     return (
       <div className="loading">
@@ -114,6 +149,11 @@ function Document() {
 
   return (
     <div className="document-bg">
+      <AddComment
+        caretPosition={caretPosition}
+        socketRef={socketRef}
+        newComment={handelSocketComment}
+      />
       <form onSubmit={handleSubmit} className="new-doc">
         <label htmlFor="title">Title</label>
         <input
@@ -129,13 +169,24 @@ function Document() {
         <label htmlFor="content">Innehåll</label>
         <textarea
           name="content"
-          className="content-input"
+          className="content-input input-width"
           value={formData.content}
           onChange={handleChange}
+          onClick={handleCarotMove}
         />
 
         <input className="button-create" type="submit" value="Uppdatera" />
       </form>
+      <div>
+        {comments.map((comments, index) => (
+          <div className="comment" key={index}>
+            <h3>
+              Rad {comments.row} | char {comments.caret}
+            </h3>
+            <p>{comments.comment}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -61,7 +61,7 @@ function CreateDocument() {
         <textarea
           id="content"
           name="content"
-          className="content-input"
+          className="content-input input-width"
           value={formData.content}
           onChange={handleChange}
         />

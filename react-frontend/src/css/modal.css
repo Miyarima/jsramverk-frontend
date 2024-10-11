@@ -1,0 +1,68 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  text-align: center;
+}
+
+.modal-button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #ff2b00;
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+}
+
+.modal-button-cancel {
+  background-color: #a8a8a8;
+}
+
+.modal-button:hover {
+  background-color: #ffa800;
+}
+
+.modal-button-cancel:hover {
+  background-color: #808080;
+}
+
+.modal-comment-button {
+  padding: 0.5em 1em;
+  background-color: #ff2b00;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  height: fit-content;
+  border: none;
+  margin-top: 1em;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.modal-comment-button:hover {
+  background-color: #ffa800;
+}
+
+.modal-comment-area {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: end;
+}
