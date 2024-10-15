@@ -8,6 +8,10 @@ function CreateDocument() {
   });
 
   const navigate = useNavigate();
+  const currentPath =
+    process.env.NODE_ENV === "production"
+      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
+      : "http://localhost:1337";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,18 +25,16 @@ function CreateDocument() {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        `https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net/docs/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...formData,
-          }),
-        }
-      );
+      const response = await fetch(`${currentPath}/graphql`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          query: `mutation { addDocument(title: "${formData.title}", content: "${formData.content}") { title } }`,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Form submission failed");
