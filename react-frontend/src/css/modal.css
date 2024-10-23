@@ -66,3 +66,16 @@
   display: flex;
   justify-content: end;
 }
+
+.error-popup {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8d7da;
+  color: #c00d1f;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
+
+.error-popup p {
+  margin: 0;
+}
