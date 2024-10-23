@@ -25,14 +25,17 @@ function CreateDocument() {
     e.preventDefault();
 
     try {
+      const user = sessionStorage.getItem("user");
+
       const response = await fetch(`${currentPath}/graphql`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-access-token": sessionStorage.getItem("token"),
           Accept: "application/json",
         },
         body: JSON.stringify({
-          query: `mutation { addDocument(title: "${formData.title}", content: "${formData.content}") { title } }`,
+          query: `mutation { addDocument(title: "${formData.title}", content: "${formData.content}", creator: "${user}") { title } }`,
         }),
       });
 

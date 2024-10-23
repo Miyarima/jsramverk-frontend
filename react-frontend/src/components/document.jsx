@@ -65,6 +65,7 @@ function Document() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-access-token": sessionStorage.getItem("token"),
         Accept: "application/json",
       },
       body: JSON.stringify({

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AllDocuments() {
   const [data, setData] = useState(null);
@@ -10,14 +10,24 @@ function AllDocuments() {
       ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
       : "http://localhost:1337";
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (!sessionStorage.getItem("token")) {
+      navigate("user/login");
+    }
+
+    const user = sessionStorage.getItem("user");
     fetch(`${currentPath}/graphql`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-access-token": sessionStorage.getItem("token"),
         Accept: "application/json",
       },
-      body: JSON.stringify({ query: "{ documents { _id, title } }" }),
+      body: JSON.stringify({
+        query: `{ documents(creator: "${user}") { _id, title } }`,
+      }),
     })
       .then((response) => {
         if (!response.ok) {

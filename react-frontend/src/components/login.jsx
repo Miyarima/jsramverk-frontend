@@ -41,6 +41,8 @@ function Login() {
       if (json.message === "Wrong email or password") {
         setErrorVisible(true);
       } else {
+        sessionStorage.setItem("token", json.token);
+        sessionStorage.setItem("user", formData.username);
         alert("Login successful!");
         setErrorVisible(false);
         navigate("/");
