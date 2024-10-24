@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import AddComment from "./comment";
+import AddCollaborator from "./inviteUser";
 
 function Document() {
   const [loading, setLoading] = useState(true);
@@ -156,11 +157,14 @@ function Document() {
 
   return (
     <div className="document-bg">
-      <AddComment
-        caretPosition={caretPosition}
-        socketRef={socketRef}
-        newComment={handelSocketComment}
-      />
+      <div className="modal-container">
+        <AddComment
+          caretPosition={caretPosition}
+          socketRef={socketRef}
+          newComment={handelSocketComment}
+        />
+        <AddCollaborator socketRef={socketRef} />
+      </div>
       <form onSubmit={handleSubmit} className="new-doc">
         <label htmlFor="title">Title</label>
         <input

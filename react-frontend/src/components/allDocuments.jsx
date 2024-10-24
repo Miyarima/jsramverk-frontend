@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { decodeJWT } from "../utils/jwt";
 
 function AllDocuments() {
   const [data, setData] = useState(null);
@@ -16,8 +17,8 @@ function AllDocuments() {
     if (!sessionStorage.getItem("token")) {
       navigate("user/login");
     }
-
-    const user = sessionStorage.getItem("user");
+    const token = sessionStorage.getItem("token");
+    const decodedToken = decodeJWT(token);
     fetch(`${currentPath}/graphql`, {
       method: "POST",
       headers: {
@@ -26,7 +27,7 @@ function AllDocuments() {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        query: `{ documents(creator: "${user}") { _id, title } }`,
+        query: `{ documents(creator: "${decodedToken.username}") { _id, title } }`,
       }),
     })
       .then((response) => {

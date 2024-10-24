@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const CommentModal = ({ isOpen, onClose, onSubmit }) => {
-  const [comment, setComment] = useState("");
+const InviteModal = ({ isOpen, onClose, onSubmit }) => {
+  const [email, setEmail] = useState("");
 
   if (!isOpen) return null;
 
   const handleSubmit = () => {
-    onSubmit(comment);
-    setComment("");
+    onSubmit(email);
+    setEmail("");
   };
 
   const handleClose = () => {
     onClose();
-    setComment("");
+    setEmail("");
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Write a Comment</h2>
-        <textarea
-          value={comment}
+        <h2>Email att bjuda in</h2>
+        <input
+          type="text"
+          value={email}
           className="modal-comment-area"
-          onChange={(e) => setComment(e.target.value)}
-          rows={5}
+          onChange={(e) => setEmail(e.target.value)}
+          rows={1}
         />
         <div>
           <button
@@ -42,7 +43,7 @@ const CommentModal = ({ isOpen, onClose, onSubmit }) => {
   );
 };
 
-const AddComment = ({ caretPosition, socketRef, newComment }) => {
+const AddCollaborator = ({ socketRef }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -53,18 +54,17 @@ const AddComment = ({ caretPosition, socketRef, newComment }) => {
     setModalOpen(false);
   };
 
-  const handleModalSubmit = (comment) => {
+  const handleModalSubmit = (email) => {
     setModalOpen(false);
-    socketRef.current.emit("comment", { comment: comment, caretPosition });
-    newComment({ comment: comment, caretPosition });
+    socketRef.current.emit("invite", { email: email });
   };
 
   return (
     <div className="modal-container">
       <button className="modal-comment-button" onClick={handleModalOpen}>
-        Kommentar
+        Bjud in
       </button>
-      <CommentModal
+      <InviteModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleModalSubmit}
@@ -73,16 +73,14 @@ const AddComment = ({ caretPosition, socketRef, newComment }) => {
   );
 };
 
-CommentModal.propTypes = {
+InviteModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
-AddComment.propTypes = {
-  caretPosition: PropTypes.object.isRequired,
+AddCollaborator.propTypes = {
   socketRef: PropTypes.object.isRequired,
-  newComment: PropTypes.func.isRequired,
 };
 
-export default AddComment;
+export default AddCollaborator;

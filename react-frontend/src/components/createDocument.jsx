@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { decodeJWT } from "../utils/jwt";
 
 function CreateDocument() {
   const [formData, setFormData] = useState({
@@ -25,7 +26,8 @@ function CreateDocument() {
     e.preventDefault();
 
     try {
-      const user = sessionStorage.getItem("user");
+      const token = sessionStorage.getItem("token");
+      const decodedToken = decodeJWT(token);
 
       const response = await fetch(`${currentPath}/graphql`, {
         method: "POST",
@@ -35,7 +37,7 @@ function CreateDocument() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          query: `mutation { addDocument(title: "${formData.title}", content: "${formData.content}", creator: "${user}") { title } }`,
+          query: `mutation { addDocument(title: "${formData.title}", content: "${formData.content}", creator: "${decodedToken.username}") { title } }`,
         }),
       });
 

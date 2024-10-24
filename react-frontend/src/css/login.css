@@ -1,0 +1,9 @@
+.account-link {
+  text-decoration: none;
+  text-align: center;
+}
+
+.account-link-container {
+  display: flex;
+  justify-content: center;
+}
