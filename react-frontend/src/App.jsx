@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CreateDocument from "./components/createDocument";
 import CreateUser from "./components/createUser";
 import Login from "./components/login";
+import CreateUserCollaborator from "./components/createUserCollaborator";
+import LoginCollaborator from "./components/loginCollaborator";
 
 const authors = "Jonathan";
 const basename = process.env.NODE_ENV === "production" ? "~jogo19/editor" : "/";
@@ -23,6 +25,14 @@ function App() {
           <Route path="/document/:id" element={<Document />} />
           <Route path="/user/create" element={<CreateUser />} />
           <Route path="/user/login" element={<Login />} />
+          <Route
+            path="/user/login/collaboration/:id"
+            element={<LoginCollaborator />}
+          />
+          <Route
+            path="/user/create/collaboration/:id"
+            element={<CreateUserCollaborator />}
+          />
         </Routes>
         <Footer authors={authors} />
       </div>

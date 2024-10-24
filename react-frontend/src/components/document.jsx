@@ -163,7 +163,11 @@ function Document() {
           socketRef={socketRef}
           newComment={handelSocketComment}
         />
-        <AddCollaborator socketRef={socketRef} />
+        <AddCollaborator
+          socketRef={socketRef}
+          documentId={id}
+          currentPath={currentPath}
+        />
       </div>
       <form onSubmit={handleSubmit} className="new-doc">
         <label htmlFor="title">Title</label>

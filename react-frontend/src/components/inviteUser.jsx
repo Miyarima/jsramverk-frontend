@@ -43,7 +43,7 @@ const InviteModal = ({ isOpen, onClose, onSubmit }) => {
   );
 };
 
-const AddCollaborator = ({ socketRef }) => {
+const AddCollaborator = ({ socketRef, documentId, currentPath }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -56,7 +56,15 @@ const AddCollaborator = ({ socketRef }) => {
 
   const handleModalSubmit = (email) => {
     setModalOpen(false);
-    socketRef.current.emit("invite", { email: email });
+    let path = "https://www.student.bth.se/~jogo19/editor";
+    if (currentPath === "http://localhost:1337") {
+      path = "http://localhost:3000";
+    }
+    socketRef.current.emit("invite", {
+      email: email,
+      id: documentId,
+      link: path,
+    });
   };
 
   return (
@@ -81,6 +89,8 @@ InviteModal.propTypes = {
 
 AddCollaborator.propTypes = {
   socketRef: PropTypes.object.isRequired,
+  currentPath: PropTypes.string.isRequired,
+  documentId: PropTypes.string.isRequired,
 };
 
 export default AddCollaborator;
