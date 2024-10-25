@@ -10,6 +10,7 @@ import CreateUser from "./components/createUser";
 import Login from "./components/login";
 import CreateUserCollaborator from "./components/createUserCollaborator";
 import LoginCollaborator from "./components/loginCollaborator";
+import CodeMode from "./components/codeMode";
 
 const authors = "Jonathan";
 const basename = process.env.NODE_ENV === "production" ? "~jogo19/editor" : "/";
@@ -33,6 +34,7 @@ function App() {
             path="/user/create/collaboration/:id"
             element={<CreateUserCollaborator />}
           />
+          <Route path="/codemode" element={<CodeMode />} />
         </Routes>
         <Footer authors={authors} />
       </div>

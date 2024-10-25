@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import AddComment from "./comment";
 import AddCollaborator from "./inviteUser";
+import { checkValidJWT } from "../utils/jwt";
 
 function Document() {
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,15 @@ function Document() {
   };
 
   useEffect(() => {
+    const validateToken = async () => {
+      const isValid = await checkValidJWT();
+      if (!isValid) {
+        navigate("user/login");
+      }
+    };
+
+    validateToken();
+
     socketRef.current = io(currentPath);
     socketRef.current.emit("create", id);
 

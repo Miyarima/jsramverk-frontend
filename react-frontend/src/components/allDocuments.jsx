@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { decodeJWT } from "../utils/jwt";
+import { decodeJWT, checkValidJWT } from "../utils/jwt";
 
 function AllDocuments() {
   const [data, setData] = useState(null);
@@ -14,9 +14,15 @@ function AllDocuments() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!sessionStorage.getItem("token")) {
-      navigate("user/login");
-    }
+    const validateToken = async () => {
+      const isValid = await checkValidJWT();
+      if (!isValid) {
+        navigate("user/login");
+      }
+    };
+
+    validateToken();
+
     const token = sessionStorage.getItem("token");
     const decodedToken = decodeJWT(token);
     fetch(`${currentPath}/graphql`, {

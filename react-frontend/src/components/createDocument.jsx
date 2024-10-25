@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { decodeJWT } from "../utils/jwt";
+import { checkValidJWT } from "../utils/jwt";
 
 function CreateDocument() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,15 @@ function CreateDocument() {
     process.env.NODE_ENV === "production"
       ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
       : "http://localhost:1337";
+
+  const validateToken = async () => {
+    const isValid = await checkValidJWT();
+    if (!isValid) {
+      navigate("user/login");
+    }
+  };
+
+  validateToken();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
