@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-function CreateUserCollaborator() {
+function LoginCollaborator() {
   const [formData, setFormData] = useState({
     username: "",
-    email: "",
     password: "",
   });
+  const [errorVisible, setErrorVisible] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
-  const currentPath =
-    process.env.NODE_ENV === "production"
-      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
-      : "http://localhost:1337";
+  const currentPath = sessionStorage.getItem("currentPath");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +24,7 @@ function CreateUserCollaborator() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${currentPath}/users/collaboration`, {
+      const response = await fetch(`${currentPath}/users/collaboration/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,11 +35,16 @@ function CreateUserCollaborator() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      const json = await response.json();
 
-      navigate("/");
+      if (json.message === "Wrong email or password") {
+        setErrorVisible(true);
+      } else {
+        sessionStorage.setItem("token", json.token);
+        alert("Login successful!");
+        setErrorVisible(false);
+        navigate("/");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -50,6 +52,11 @@ function CreateUserCollaborator() {
 
   return (
     <div className="document-bg">
+      {errorVisible && (
+        <div className="error-popup">
+          <p>Wrong username or password.</p>
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="new-doc">
         <label htmlFor="title">Användarnamn</label>
         <input
@@ -58,16 +65,6 @@ function CreateUserCollaborator() {
           name="username"
           className="title-input"
           value={formData.username}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="title">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          className="title-input"
-          value={formData.email}
           onChange={handleChange}
         />
 
@@ -80,11 +77,15 @@ function CreateUserCollaborator() {
           value={formData.password}
           onChange={handleChange}
         />
-
-        <input className="button-create" type="submit" value="Skapa Konto" />
+        <input className="button-create" type="submit" value="Logga in" />
       </form>
+      <div className="account-link-container">
+        <Link className="account-link" to="/user/create">
+          Need an account?
+        </Link>
+      </div>
     </div>
   );
 }
 
-export default CreateUserCollaborator;
+export default LoginCollaborator;

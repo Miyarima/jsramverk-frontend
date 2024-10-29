@@ -15,10 +15,7 @@ export const validateToken = async () => {
 };
 
 export const checkValidJWT = async () => {
-  const currentPath =
-    process.env.NODE_ENV === "production"
-      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
-      : "http://localhost:1337";
+  const currentPath = sessionStorage.getItem("currentPath");
 
   try {
     const response = await fetch(`${currentPath}/token/check`, {
@@ -32,11 +29,11 @@ export const checkValidJWT = async () => {
     });
 
     if (!response.ok) {
-      console.log("Token was invalid!");
+      // console.log("Token was invalid!");
       return false;
     }
 
-    console.log("Token was valid!");
+    // console.log("Token was valid!");
     return true;
   } catch (error) {
     console.error("Error checking token validity:", error);

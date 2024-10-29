@@ -166,7 +166,12 @@ footer {
 .docs-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 1em;
+}
+
+.docs-layout {
+  display: flex;
+  flex-direction: column;
   gap: 1em;
 }
 

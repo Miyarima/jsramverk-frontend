@@ -1,8 +1,10 @@
 .code-container {
   display: flex;
-  width: 100vw;
   height: 90vh;
   gap: 0.5em;
+  width: 96%;
+  max-width: 64rem;
+  margin: auto;
 }
 
 .code-box {
@@ -18,9 +20,14 @@
 
 .execute-button {
   width: fit-content;
+  margin: 0;
 }
 
 .execute-container {
   display: flex;
   justify-content: end;
+  width: 96%;
+  max-width: 64rem;
+  margin: 0.5em auto;
+  gap: 0.25em;
 }

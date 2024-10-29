@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function LoginCollaborator() {
+function Login() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -9,11 +9,7 @@ function LoginCollaborator() {
   const [errorVisible, setErrorVisible] = useState(false);
 
   const navigate = useNavigate();
-  const { id } = useParams();
-  const currentPath =
-    process.env.NODE_ENV === "production"
-      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
-      : "http://localhost:1337";
+  const currentPath = sessionStorage.getItem("currentPath");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,13 +23,12 @@ function LoginCollaborator() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${currentPath}/users/collaboration/login`, {
+      const response = await fetch(`${currentPath}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id,
           ...formData,
         }),
       });
@@ -91,4 +86,4 @@ function LoginCollaborator() {
   );
 }
 
-export default LoginCollaborator;
+export default Login;

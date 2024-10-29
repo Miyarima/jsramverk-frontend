@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AllDocuments from "./allDocuments.jsx";
+import AllDocuments from "./documents/allDocuments.jsx";
 
 function Main() {
   return (
