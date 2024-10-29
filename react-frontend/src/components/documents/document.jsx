@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import AddComment from "./comment";
+import AddCollaborator from "../users/inviteUser";
+import { checkValidJWT } from "../../utils/jwt";
+import { query } from "../../utils/query";
 
 function Document() {
   const [loading, setLoading] = useState(true);
@@ -14,10 +17,7 @@ function Document() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const currentPath =
-    process.env.NODE_ENV === "production"
-      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
-      : "http://localhost:1337";
+  const currentPath = sessionStorage.getItem("currentPath");
 
   const socketRef = useRef(null);
 
@@ -46,6 +46,17 @@ function Document() {
   };
 
   useEffect(() => {
+    const validateToken = async () => {
+      const isValid = await checkValidJWT();
+      if (!isValid) {
+        navigate("/user/login");
+      }
+    };
+
+    validateToken();
+  }, []);
+
+  useEffect(() => {
     socketRef.current = io(currentPath);
     socketRef.current.emit("create", id);
 
@@ -61,35 +72,28 @@ function Document() {
       handelSocketComment(data);
     });
 
-    fetch(`${currentPath}/graphql`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": sessionStorage.getItem("token"),
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        query: `{ document(id: "${id}") { title, content } }`,
-      }),
-    })
-      .then((response) => {
+    const setData = async () => {
+      try {
+        const response = await query.getDocumentGraphql(id);
+
         if (!response.ok) {
           throw new Error("An Error has occured");
         }
-        return response.json();
-      })
-      .then((data) => {
+
+        const data = await response.json();
+
         setFormData({
           title: data.data.document.title || "",
           content: data.data.document.content || "",
         });
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error:", error);
         setLoading(false);
-      });
+      }
+    };
 
+    setData();
     return () => {
       socketRef.current.disconnect();
     };
@@ -112,16 +116,11 @@ function Document() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${currentPath}/graphql`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          query: `mutation { updateDocument(id: "${id}", title: "${formData.title}", content: "${formData.content}") { id } }`,
-        }),
-      });
+      const response = await query.updateGraphql(
+        id,
+        formData.title,
+        formData.content
+      );
 
       if (!response.ok) {
         throw new Error("Form submission failed");
@@ -156,11 +155,18 @@ function Document() {
 
   return (
     <div className="document-bg">
-      <AddComment
-        caretPosition={caretPosition}
-        socketRef={socketRef}
-        newComment={handelSocketComment}
-      />
+      <div className="modal-container">
+        <AddComment
+          caretPosition={caretPosition}
+          socketRef={socketRef}
+          newComment={handelSocketComment}
+        />
+        <AddCollaborator
+          socketRef={socketRef}
+          documentId={id}
+          currentPath={currentPath}
+        />
+      </div>
       <form onSubmit={handleSubmit} className="new-doc">
         <label htmlFor="title">Title</label>
         <input

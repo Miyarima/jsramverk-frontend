@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const CommentModal = ({ isOpen, onClose, onSubmit }) => {
-  const [comment, setComment] = useState("");
+const InviteModal = ({ isOpen, onClose, onSubmit }) => {
+  const [email, setEmail] = useState("");
 
   if (!isOpen) return null;
 
   const handleSubmit = () => {
-    onSubmit(comment);
-    setComment("");
+    onSubmit(email);
+    setEmail("");
   };
 
   const handleClose = () => {
     onClose();
-    setComment("");
+    setEmail("");
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Write a Comment</h2>
-        <textarea
-          value={comment}
+        <h2>Email att bjuda in</h2>
+        <input
+          type="text"
+          value={email}
           className="modal-comment-area"
-          onChange={(e) => setComment(e.target.value)}
-          rows={5}
+          onChange={(e) => setEmail(e.target.value)}
+          rows={1}
         />
         <div>
           <button
@@ -42,7 +43,7 @@ const CommentModal = ({ isOpen, onClose, onSubmit }) => {
   );
 };
 
-const AddComment = ({ caretPosition, socketRef, newComment }) => {
+const AddCollaborator = ({ socketRef, documentId, currentPath }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -53,20 +54,25 @@ const AddComment = ({ caretPosition, socketRef, newComment }) => {
     setModalOpen(false);
   };
 
-  const handleModalSubmit = (comment) => {
-    console.log("Submitted comment:", comment);
-    console.log("Cursors position was:", caretPosition);
+  const handleModalSubmit = (email) => {
     setModalOpen(false);
-    socketRef.current.emit("comment", { comment: comment, caretPosition });
-    newComment({ comment: comment, caretPosition });
+    let path = "https://www.student.bth.se/~jogo19/editor";
+    if (currentPath === "http://localhost:1337") {
+      path = "http://localhost:3000";
+    }
+    socketRef.current.emit("invite", {
+      email: email,
+      id: documentId,
+      link: path,
+    });
   };
 
   return (
     <div className="modal-container">
       <button className="modal-comment-button" onClick={handleModalOpen}>
-        Lägg till kommentar
+        Bjud in
       </button>
-      <CommentModal
+      <InviteModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleModalSubmit}
@@ -75,16 +81,16 @@ const AddComment = ({ caretPosition, socketRef, newComment }) => {
   );
 };
 
-CommentModal.propTypes = {
+InviteModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
-AddComment.propTypes = {
-  caretPosition: PropTypes.object.isRequired,
+AddCollaborator.propTypes = {
   socketRef: PropTypes.object.isRequired,
-  newComment: PropTypes.func.isRequired,
+  currentPath: PropTypes.string.isRequired,
+  documentId: PropTypes.string.isRequired,
 };
 
-export default AddComment;
+export default AddCollaborator;

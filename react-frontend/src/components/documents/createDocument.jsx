@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { checkValidJWT } from "../../utils/jwt";
+import { query } from "../../utils/query";
 
 function CreateDocument() {
   const [formData, setFormData] = useState({
@@ -8,10 +10,17 @@ function CreateDocument() {
   });
 
   const navigate = useNavigate();
-  const currentPath =
-    process.env.NODE_ENV === "production"
-      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
-      : "http://localhost:1337";
+
+  useEffect(() => {
+    const validateToken = async () => {
+      const isValid = await checkValidJWT();
+      if (!isValid) {
+        navigate("/user/login");
+      }
+    };
+
+    validateToken();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,19 +34,11 @@ function CreateDocument() {
     e.preventDefault();
 
     try {
-      const user = sessionStorage.getItem("user");
-
-      const response = await fetch(`${currentPath}/graphql`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": sessionStorage.getItem("token"),
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          query: `mutation { addDocument(title: "${formData.title}", content: "${formData.content}", creator: "${user}") { title } }`,
-        }),
-      });
+      const response = await query.addGraphql(
+        formData.title,
+        formData.content,
+        "no"
+      );
 
       if (!response.ok) {
         throw new Error("Form submission failed");

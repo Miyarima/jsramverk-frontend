@@ -1,0 +1,33 @@
+.code-container {
+  display: flex;
+  height: 90vh;
+  gap: 0.5em;
+  width: 96%;
+  max-width: 64rem;
+  margin: auto;
+}
+
+.code-box {
+  flex: 1;
+  border: 1px solid #b3b3b3;
+  margin: 0.25em;
+}
+
+.code-result {
+  padding: 1em;
+  font-size: 0.9em;
+}
+
+.execute-button {
+  width: fit-content;
+  margin: 0;
+}
+
+.execute-container {
+  display: flex;
+  justify-content: end;
+  width: 96%;
+  max-width: 64rem;
+  margin: 0.5em auto;
+  gap: 0.25em;
+}

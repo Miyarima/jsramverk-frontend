@@ -4,7 +4,12 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/language": "^6.10.3",
+    "@codemirror/view": "^6.34.1",
     "@testing-library/user-event": "^13.5.0",
+    "@uiw/react-codemirror": "^4.23.6",
+    "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

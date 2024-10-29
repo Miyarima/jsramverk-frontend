@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -9,10 +9,7 @@ function Login() {
   const [errorVisible, setErrorVisible] = useState(false);
 
   const navigate = useNavigate();
-  const currentPath =
-    process.env.NODE_ENV === "production"
-      ? "https://dida-jogo19-dv1677-h24-lp1-aga5c6ctgsc5h3fj.northeurope-01.azurewebsites.net"
-      : "http://localhost:1337";
+  const currentPath = sessionStorage.getItem("currentPath");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +39,6 @@ function Login() {
         setErrorVisible(true);
       } else {
         sessionStorage.setItem("token", json.token);
-        sessionStorage.setItem("user", formData.username);
         alert("Login successful!");
         setErrorVisible(false);
         navigate("/");
@@ -79,9 +75,13 @@ function Login() {
           value={formData.password}
           onChange={handleChange}
         />
-
         <input className="button-create" type="submit" value="Logga in" />
       </form>
+      <div className="account-link-container">
+        <Link className="account-link" to="/user/create">
+          Need an account?
+        </Link>
+      </div>
     </div>
   );
 }
