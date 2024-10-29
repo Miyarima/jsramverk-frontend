@@ -22,12 +22,14 @@ export const query = {
     return response;
   },
   updateGraphql: async (id, title, content) => {
+    const token = sessionStorage.getItem("token");
     const response = await fetch(
       `${sessionStorage.getItem("currentPath")}/graphql`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-access-token": token,
           Accept: "application/json",
         },
         body: JSON.stringify({

@@ -43,6 +43,7 @@ function CreateCodeMode() {
 
   const handleSaveDoc = async () => {
     await query.addGraphql("", value, "yes");
+    navigate("/");
   };
 
   return (
